@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.info2000.org/Policy"
+	xmlns:pol="http://www.info2000.org/Policy" elementFormDefault="qualified">
+	<element name="Policy" type="pol:policy" />
+	<complexType name="policy">
+		<sequence>
+			<element name="productType" type="pol:productType" />
+			<element name="policyStatus" type="string" />
+			<element name="policyHoldersAddress" type="pol:address"
+				maxOccurs="2" />
+		</sequence>
+		<attribute name="policyNumber" type="pol:policyNumber"></attribute>
+	</complexType>
+	<simpleType name="productType">
+		<restriction base="string">
+			<enumeration value="SW700"></enumeration>
+			<enumeration value="SW715"></enumeration>
+			<enumeration value="SW535"></enumeration>
+			<enumeration value="SW100"></enumeration>
+		</restriction>
+	</simpleType>
+	<simpleType name="policyNumber">
+		<restriction base="string">
+			<pattern value="[0-9]*"></pattern>
+			<maxLength value="14"></maxLength>
+			<minLength value="14"></minLength>
+		</restriction>
+	</simpleType>
+	<complexType name="address">
+		<choice>
+			<element name="PostalHomeAddress" type="pol:PostalHomeAddress"></element>
+			<element name="email" type="string"></element>
+			<element name="PostalOfficeAddress" type="string"></element>
+		</choice>
+	</complexType>
+	<complexType name="PostalHomeAddress">
+		<all>
+			<element name="houseNumber" type="string" />
+			<element name="streetName" type="string" />
+			<element name="postalCode" type="int" />
+		</all>
+	</complexType>
+</schema>
