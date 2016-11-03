@@ -12,6 +12,17 @@
 		<jaxws:serviceBean>
 			<bean class="com.rohit.codefirst.AuthGeneratorImp"></bean>
 		</jaxws:serviceBean>
+		<jaxws:inInterceptors>
+			<bean class="org.apache.cxf.ws.security.wss4j.WSS4JInInterceptor">
+				<constructor-arg>
+					<map>
+						<entry key="action" value="UsernameToken" />
+						<entry key="passwordType" value="PasswordText" />
+						<entry key="passwordCallbackRef" value-ref="interseptor" />
+					</map>
+				</constructor-arg>
+			</bean>
+		</jaxws:inInterceptors>
 	</jaxws:server>
 	<!-- this enables logging of all incoming and outgoing messages on console -->
 	<core:bus>
@@ -19,5 +30,5 @@
 			<core:logging />
 		</core:features>
 	</core:bus>
-
+	<bean id="interseptor" class="com.rohit.codefirst.SecurityHandler" />
 </beans>
