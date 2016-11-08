@@ -1,0 +1,127 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://trainings.ws.rohit.com/"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http"
+	name="PolicyService" targetNamespace="http://trainings.ws.rohit.com/">
+	<wsdl:types>
+	<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+		xmlns:tns="http://trainings.ws.rohit.com/" elementFormDefault="unqualified"
+		targetNamespace="http://trainings.ws.rohit.com/" version="1.0">
+
+		<xs:complexType name="policy">
+			<xs:sequence>
+				<xs:element name="policyNumber" type="xs:string" />
+				<xs:element maxOccurs="unbounded" name="product" type="tns:product" />
+			</xs:sequence>
+		</xs:complexType>
+
+		<xs:complexType name="product">
+			<xs:sequence>
+				<xs:element minOccurs="0" name="type" type="xs:string" />
+				<xs:element minOccurs="0" name="description" type="xs:string" />
+				<xs:element minOccurs="0" name="status" type="xs:string" />
+			</xs:sequence>
+		</xs:complexType>
+
+		<xs:element name="getPolicyRequest" type="tns:getPolicyRequest" />
+
+		<xs:element name="getPolicyResponse" type="tns:getPolicyResponse" />
+
+		<xs:complexType name="getPolicyRequest">
+			<xs:sequence>
+				<xs:element minOccurs="0" name="policyNumber" type="xs:string" />
+			</xs:sequence>
+		</xs:complexType>
+
+		<xs:complexType name="getPolicyResponse">
+			<xs:sequence>
+				<xs:element minOccurs="0" maxOccurs="unbounded" name="policy"
+					type="tns:policy" />
+			</xs:sequence>
+		</xs:complexType>
+
+		<xs:element name="createPolicyRequest" type="tns:createPolicyRequest" />
+
+		<xs:element name="createPolicyResponse" type="tns:createPolicyResponse" />
+
+		<xs:complexType name="createPolicyRequest">
+			<xs:sequence>
+				<xs:element name="policyNumber" type="xs:string" />
+				<xs:element name="product" type="tns:product" />
+			</xs:sequence>
+		</xs:complexType>
+
+		<xs:complexType name="createPolicyResponse">
+			<xs:sequence>
+				<xs:element name="result" type="xs:boolean" />
+			</xs:sequence>
+		</xs:complexType>
+
+		</xs:schema>
+	</wsdl:types>
+
+	<wsdl:message name="getPolicyRequest">
+		<wsdl:part element="tns:getPolicyRequest" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getPolicyResponse">
+		<wsdl:part element="tns:getPolicyResponse" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+
+	<wsdl:message name="createPolicyRequest">
+		<wsdl:part element="tns:createPolicyRequest" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="createPolicyResponse">
+		<wsdl:part element="tns:createPolicyResponse" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+
+	<wsdl:portType name="CustomerPolicyPortType">
+		<wsdl:operation name="getPolicy">
+			<wsdl:input message="tns:getPolicyRequest" name="getPolicyRequest">
+			</wsdl:input>
+			<wsdl:output message="tns:getPolicyResponse" name="getPolicyResponse">
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="createPolicy">
+			<wsdl:input message="tns:createPolicyRequest" name="createPolicyRequest">
+			</wsdl:input>
+			<wsdl:output message="tns:createPolicyResponse" name="createPolicyResponse">
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:portType>
+
+	<wsdl:binding name="CustomerPolicyServiceSoapBinding"
+		type="tns:CustomerPolicyPortType">
+		<soap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="getPolicy">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="getPolicyRequest">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="getPolicyResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="createPolicy">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="createPolicyRequest">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="createPolicyResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+
+	<wsdl:service name="CustomerPolicyService">
+		<wsdl:port binding="tns:CustomerPolicyServiceSoapBinding"
+			name="CustomerPolicyPort">
+			<soap:address
+				location="http://localhost:8080/wsdlfirstws/services/customerpolicyService" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>
